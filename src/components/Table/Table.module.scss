@@ -1,0 +1,26 @@
+.delete {
+	color: red;
+}
+
+.edit {
+	color: gray;
+}
+
+.add {
+	color: black;
+}
+
+.edit:hover,
+.delete:hover,
+.add:hover {
+	transform: rotate(10deg);
+	cursor: pointer;
+}
+
+.caption {
+	border-bottom: 1px solid rgb(0 0 0 / 12%);
+	.caption__box {
+		display: flex;
+		align-items: center;
+	}
+}

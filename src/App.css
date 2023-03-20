@@ -1,0 +1,34 @@
+.App {
+	font-size: 14px;
+}
+
+.wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 10px;
+}
+
+.nav {
+	font-size: 1rem;
+}
+
+.nav a {
+	text-decoration: none;
+	color: black;
+}
+
+.nav a:hover {
+	color: orange;
+}
+
+.nav a + a {
+	margin-left: 10px;
+}
