@@ -24,11 +24,3 @@
 	text-decoration: none;
 	color: black;
 }
-
-.nav a:hover {
-	color: orange;
-}
-
-.nav a + a {
-	margin-left: 10px;
-}

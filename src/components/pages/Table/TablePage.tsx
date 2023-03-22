@@ -7,6 +7,7 @@ import ModalEditRow from "../../modals/ModalEditRow/ModalEditRow";
 import { CircularProgress } from "@mui/material";
 import TableComp from "../../Table/TableComp";
 import { IData } from "../../../API/table";
+import auth from "../../../store/auth";
 
 const TablePage = observer(() => {
 	const [isModalCreateRowOn, setModalCreateRow] = useState(false);
@@ -14,22 +15,23 @@ const TablePage = observer(() => {
 	const [row, setRow] = useState<IData | null>();
 	const navigate = useNavigate();
 
-	const createRowHandler = () => {};
-	const editRowHandler = (id: number) => {
+	const createRowHandler = () => {
+		setModalCreateRow(true);
+	};
+	const editRowHandler = (id: string) => {
 		const row = table.data.find((row) => row.id === id);
 		if (row) {
 			setModalEditRow(true);
 			setRow(row);
 		} else setRow(null);
 	};
-	const deleteRowHandler = (id: number) => {};
+	const deleteRowHandler = (id: string) => {
+		table.delete(id);
+	};
 
 	useEffect(() => {
-		const token = JSON.parse(localStorage.getItem("token") || "null");
-		if (!token) navigate("/login");
-		else {
-			table.fetchTable();
-		}
+		if (auth.auth) table.fetchTable();
+		else navigate("/login");
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -45,7 +47,8 @@ const TablePage = observer(() => {
 				<CircularProgress />
 			) : (
 				<TableComp
-					data={table.data}
+					data={table.data.slice()}
+					createRow={createRowHandler}
 					editRow={editRowHandler}
 					deleteRow={deleteRowHandler}
 				/>

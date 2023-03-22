@@ -1,0 +1,22 @@
+.wrapper {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    width: 10%;
+
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    opacity: 0.6;
+}
+
+.error {
+    position: relative;
+    background-color: red;
+}
+
+.close {
+
+}

@@ -16,11 +16,12 @@ import { IData } from "../../API/table";
 
 interface TableCompProps {
 	data: IData[];
-	editRow: (id: number) => any;
-	deleteRow: (id: number) => any;
+	editRow: (id: string) => any;
+	deleteRow: (id: string) => any;
+	createRow: () => any;
 }
 
-const TableComp = ({ data, editRow, deleteRow }: TableCompProps) => {
+const TableComp = ({ data, editRow, deleteRow, createRow }: TableCompProps) => {
 	return (
 		<TableContainer component={Paper} sx={{ marginTop: "20px" }}>
 			<Table sx={{ minWidth: 650 }}>
@@ -33,7 +34,7 @@ const TableComp = ({ data, editRow, deleteRow }: TableCompProps) => {
 							Таблица такая-то, вы можете добавить строку
 							такую-то...
 						</span>
-						<AddIcon onClick={() => {}} className={styles.add} />
+						<AddIcon onClick={createRow} className={styles.add} />
 					</div>
 				</caption>
 				<TableHead>
@@ -74,13 +75,17 @@ const TableComp = ({ data, editRow, deleteRow }: TableCompProps) => {
 							<TableCell>{row.employeeSignatureName}</TableCell>
 							<TableCell>
 								<EditIcon
-									onClick={() => editRow(row.id)}
+									onClick={() => {
+										if (row.id) editRow(row.id);
+									}}
 									className={styles.edit}
 								/>
 							</TableCell>
 							<TableCell>
 								<DeleteIcon
-									onClick={() => deleteRow(row.id)}
+									onClick={() => {
+										if (row.id) deleteRow(row.id);
+									}}
 									className={styles.delete}
 								/>
 							</TableCell>

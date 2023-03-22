@@ -22,6 +22,24 @@ const ModalEditRow = ({ row, close }: ModalEditRowProps) => {
 		row.employeeSignatureName
 	);
 
+	const editHandler = () => {
+		const newRow = {
+			id: row.id,
+			companySignatureName: companySignatureName,
+			documentName: documentName,
+			documentStatus: documentStatus,
+			documentType: documentType,
+			employeeNumber: employeeNumber,
+			employeeSignatureName: employeeSignatureName,
+		};
+		table.edit({
+			...newRow,
+			companySigDate: new Date().toISOString(),
+			employeeSigDate: new Date().toISOString(),
+		});
+		close();
+	};
+
 	return (
 		<ModalWrapper close={close}>
 			<div className={styles.wrapper}>
@@ -72,7 +90,7 @@ const ModalEditRow = ({ row, close }: ModalEditRowProps) => {
 					<Button
 						color='success'
 						variant='contained'
-						onClick={() => table.edit()}
+						onClick={() => editHandler()}
 					>
 						Изменить
 					</Button>
