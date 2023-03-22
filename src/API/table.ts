@@ -1,3 +1,4 @@
+import errors from "../store/errors";
 import instanse, { createRowURL, deleteRowURL, getTableURL } from "./axios";
 
 export interface IData {
@@ -16,6 +17,11 @@ export type Status = "pending" | "fulfilled";
 
 export async function getAllTable() {
 	const response = await instanse.get(getTableURL);
-	if (response.data.error_code) throw new Error(response.data.error_message);
+	if (response.data.error_code)
+		errors.addError({
+			code: response.data.error_code,
+			text: response.data.error_text,
+			id: new Date(),
+		});
 	return response.data.data;
 }

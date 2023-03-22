@@ -31,8 +31,7 @@ const TableComp = ({ data, editRow, deleteRow, createRow }: TableCompProps) => {
 				>
 					<div className={styles.caption__box}>
 						<span>
-							Таблица такая-то, вы можете добавить строку
-							такую-то...
+							Таблица такая-то, вы можете добавить новую запись:
 						</span>
 						<AddIcon onClick={createRow} className={styles.add} />
 					</div>

@@ -1,17 +1,29 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
+
+interface Error {
+	code: number;
+	text: string;
+	id: Date;
+}
 
 class Errors {
-	errors: string[] = [];
+	errors: Error[] = [];
 
 	constructor() {
 		makeAutoObservable(this);
 	}
 
-	addError(string: string) {
-		this.errors.push(string);
+	addError(error: Error) {
+		this.errors.push(error);
 		setTimeout(() => {
-			this.errors.shift();
+			runInAction(()=>{
+				this.errors.shift();
+			})
+
 		}, 3000);
+	}
+	deleteError(id: Date) {
+		this.errors = this.errors.filter((err) => err.id !== id);
 	}
 }
 

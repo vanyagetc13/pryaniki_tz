@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { action, makeAutoObservable } from "mobx";
 import instanse, { loginURL } from "../API/axios";
 import errors from "./errors";
 
@@ -11,7 +11,7 @@ class Auth {
 
 	checkAuth() {
 		const token = JSON.parse(localStorage.getItem("token") || "null");
-		if (token) this.login();
+		if (token) this.auth = true;
 	}
 
 	authorize(username: string, password: string) {
@@ -20,24 +20,24 @@ class Auth {
 				username: username,
 				password: password,
 			})
-			.then((response) => response.data)
-			.then((data) => {
-				const error_code = data.error_code;
-				const error_message = data.error_text;
-				if (error_code) throw new Error(error_message);
-				const token = data.data.token;
-				localStorage.setItem("token", JSON.stringify(token));
-				this.login();
-			})
-			.catch((error) => {
-				errors.addError(error)
-				console.error(error);
-			});
+			.then(
+				action("success", (response) => {
+					const { data, error_code, error_text } = response.data;
+					if (error_code) {
+						errors.addError({code: error_code, text: error_text, id: new Date()});
+						return;
+					}
+					const token = data.token;
+					localStorage.setItem("token", JSON.stringify(token));
+					this.auth = true;
+				})
+			);
 	}
 
 	login() {
 		this.auth = true;
 	}
+
 	logout() {
 		this.auth = false;
 	}

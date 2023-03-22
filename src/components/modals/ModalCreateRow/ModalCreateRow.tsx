@@ -3,6 +3,7 @@ import React, { FormEvent, useState } from "react";
 import ModalWrapper from "../ModalWrapper/ModalWrapper";
 import styles from "./ModalCreateRow.module.scss";
 import table from "./../../../store/table";
+import errors from "../../../store/errors";
 
 interface ModalCreateRowProps {
 	close: () => any;
@@ -31,6 +32,7 @@ const ModalCreateRow = ({ close }: ModalCreateRowProps) => {
 			companySigDate: new Date().toISOString(),
 			employeeSigDate: new Date().toISOString(),
 		});
+		close();
 	};
 
 	return (

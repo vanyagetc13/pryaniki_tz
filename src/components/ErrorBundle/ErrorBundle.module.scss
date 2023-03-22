@@ -1,22 +1,34 @@
 .wrapper {
-    position: absolute;
-    left: 5px;
-    bottom: 5px;
-    width: 10%;
+	position: absolute;
+	left: 5px;
+	bottom: 5px;
+	width: 10%;
 
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    opacity: 0.6;
+	display: flex;
+	flex-direction: column-reverse;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
 }
 
 .error {
-    position: relative;
-    background-color: red;
+	position: relative;
+	background-color: rgba(255, 0, 25, 0.8);
+	font-size: 1.2rem;
+    padding: 15px;
 }
 
 .close {
+	position: absolute;
+	right: 3px;
+	top: 3px;
+	cursor: pointer;
+	&:hover {
+		color: white;
+	}
+}
 
+h5 {
+    margin: 0;
+    padding: 0;
 }

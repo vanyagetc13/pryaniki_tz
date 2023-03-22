@@ -5,6 +5,7 @@ import instanse, {
 	deleteRowURL,
 	editRowURL,
 } from "./../API/axios";
+import errors from "./errors";
 
 class Table {
 	data: IData[] = [];
@@ -25,15 +26,26 @@ class Table {
 	}
 
 	create(row: IData) {
+		const isValid = Object.values(row).every((e) => e !== "");
+		if (!isValid)
+			return errors.addError({
+				code: 1,
+				text: "Все поля должны быть заполнены.",
+				id: new Date(),
+			});
 		instanse
 			.post(createRowURL, row)
 			.then((response) => response.data)
 			.then((data) => {
 				console.log(data);
-				if (data.error_code) throw new Error(data.error_message);
+				if (data.error_code)
+					return errors.addError({
+						code: data.error_code,
+						text: data.error_text,
+						id: new Date(),
+					});
 				this.data = [...this.data, data.data];
-			})
-			.catch((err) => console.error(err));
+			});
 	}
 
 	edit(row: IData) {
@@ -42,13 +54,17 @@ class Table {
 			.post(editRowURL(row.id), row)
 			.then((response) => response.data)
 			.then((data) => {
-				if (data.error_code) throw new Error(data.error_message);
+				if (data.error_code)
+					return errors.addError({
+						code: data.error_code,
+						text: data.error_text,
+						id: new Date(),
+					});
 				const id = this.data.findIndex((r) => r.id === row.id);
 				runInAction(() => {
 					this.data[id] = data.data;
 				});
-			})
-			.catch((err) => console.error(err));
+			});
 	}
 
 	delete(id: string) {
@@ -56,12 +72,17 @@ class Table {
 			.post(deleteRowURL(id))
 			.then((response) => response.data)
 			.then((data) => {
-				if (data.error_code) throw new Error(data.error_message);
+				console.log(data);
+				if (data.error_code)
+					return errors.addError({
+						code: data.error_code,
+						text: data.error_text,
+						id: new Date(),
+					});
 				runInAction(() => {
 					this.data = this.data.filter((row) => row.id !== id);
 				});
-			})
-			.catch((err) => console.error(err));
+			});
 	}
 }
 
