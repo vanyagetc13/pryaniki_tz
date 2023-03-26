@@ -1,5 +1,5 @@
 https://pryaniki-tz.vercel.app/
 
 use:
-  user: user1,
+  login: user1,
   password: password
